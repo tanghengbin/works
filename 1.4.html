@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width , initial-scale=1">
+  <!-- 
+   增加这句后，可以看到浏览器的DevTools面板的模拟移动设备状态的变化
+  -->
+  <!-- <link rel="stylesheet" href="myCSS.css" >  -->
+  <style>
+    *{
+      margin: 10px;
+      text-align: center;
+    }
+    header{
+        border: 2px solid blue;
+        height: 10%;
+        /* 相对字体大小 */
+        font-size: 1.6em;
+    }
+
+    nav{
+        border: 2px solid blue;
+        height: 10%;
+        font-size: 1.2em;
+  }
+
+    #main{
+        border: 2px solid blue;
+        height: 70%;
+        font-size: 1.4em;
+        position: relative;
+    }
+
+    footer{
+        border: 2px solid blue;
+        height: 10%;
+        font-size: 1.1em;
+    }
+
+    body{
+      position: relative;
+    }
+
+
+    #aid{
+        position: absolute;
+        border: 3px solid blue;
+        top: 10px;
+        left: 600px;
+
+    }
+    #bookface{
+      position: absolute;
+      height: 80%;
+      width: 80%;
+      border: 1px solid red;
+      background-color: yellow;
+      left: 7%;
+    }
+  </style>
+  
+  <title>Welcome to myCTApp</title>
+ </head> 
+ <body>
+  <header>
+    <p>
+      现代电影赏析
+    </p>
+
+  </header>
+
+  <nav>
+    <button>导航一</button>
+    <button>导航二</button>
+    <button>导航三</button>
+  </nav>
+
+   <main id="main">
+
+    <div id="bookface">
+        书的封面
+    </div>
+      
+   </main>
+
+  <footer> 
+    <p id="statusInfo">
+      唐恒彬 江西科技师范大学 2021-2025
+    </p>
+  </footer> 
+  <div id="aid">
+      用户键盘响应区
+  </div>
+ <!-- <script src="myJs.js" >  -->
+
+<script>
+  var UI = {};
+  UI.appWidth = (window.innerWidth > 600 ? 600 : window.innerWidth);
+  UI.appHeight = window.innerHeight;
+  let baseFont = UI.appWidth / 20;
+  //因为我们改变了body对象的字体大小，这个属性会遗传给body的子子孙孙，形成自己的响应式设计
+  document.body.style.fontSize = baseFont + 'px';
+  //通过把window的高度设置为body（屏幕）的高度，实现全屏。
+  //通过CSS代码对body子对象的百分比分配，从而实现响应式设计的目标
+  document.body.style.width = UI.appWidth + 'px';
+  document.body.style.height = UI.appHeight  - 25 + 'px';
+  if(window.innerWidth < 1000){
+    $("aid").style.display = 'none';
+  }
+  $("aid").style.width = window.innerWidth - UI.appWidth - 25 + 'px';
+  $("aid").style.height = UI.appHeight - 25 + 'px';
+
+  //尝试对鼠标设计UI控制
+  var mouse = {};
+  mouse.isDown = false;
+  mouse.x = 0;
+  mouse.y = 0;
+  mouse.deltaX = 0;
+
+  //鼠标按下
+  $("bookface").addEventListener("mousedown", function(ev){
+    //阻止所有默认事件发生
+    ev.preventDefault();
+
+    mouse.isDown = true;
+    mouse.x = ev.pageX;
+    mouse.y = ev.pageY;
+
+    console.log("鼠标按下了，坐标为" + "(" + mouse.x + "," + mouse.y + ")");
+    $("bookface").textContent = "鼠标按下了，坐标为" + "(" + mouse.x + "," + mouse.y + ")";
+  }); 
+
+
+
+ //鼠标移动
+  $("bookface").addEventListener("mousemove", function(ev){
+    //阻止所有默认事件发生
+    ev.preventDefault();
+    
+     if(mouse.isDown){
+      let x = ev.pageX;
+      let y = ev.pageY;
+
+      //每次鼠标移动按下时的移动距离
+      mouse.deltaX = x - mouse.x;
+      console.log("鼠标正在拖动，距离为" + mouse.deltaX);
+      console.log("鼠标正在拖动，坐标为" + "(" + x + "," + y + ")");
+      $("bookface").textContent = "鼠标正在拖动，坐标为" + "(" + x + "," + y + ")";
+
+      $("bookface").style.left = $("bookface").offsetLeft/2 + mouse.deltaX/2 + 'px';
+      mouse.deltaX = 0;
+     }
+     
+ }); 
+
+
+//鼠标松开
+ $("bookface").addEventListener("mouseup", function(ev){
+    //阻止所有默认事件发生
+    ev.preventDefault();
+
+     mouse.isDown = false;
+     mouse.x = 0;
+     mouse.y = 0;
+     console.log("鼠标松开了");
+     $("bookface").textContent = "鼠标松开了"; 
+
+    if(Math.abs(mouse.deltaX) > 50){
+       $("bookface").textContent += "这是有效拖动";
+     }
+  });
+
+  function $(ele){
+        if (typeof ele !== 'string'){
+           throw("自定义的$函数参数的数据类型错误，实参必须是字符串！");
+           return 
+        } 
+        let dom = document.getElementById(ele) ;
+          if(dom){
+            return dom ;
+          }else{
+            dom = document.querySelector(ele) ;
+            if (dom) {
+                return dom ;
+            }else{
+                throw("执行$函数未能在页面上获取任何元素，请自查问题！");
+                return ;
+            }
+          }
+       } //end of $
+</script>
+ </script>
+ </body>
+</html>
