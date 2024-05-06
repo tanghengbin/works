@@ -2,7 +2,11 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width , initial-scale=1">
+  <!--
+  user-scalable 控制是否允许页面上的放大和缩小操作。有效值为 0、1、yes 或 no。默认值为 1，与 yes 
+  将值设置为 0（即与 no 相同）
+-->
+<meta name="viewport" content="width=device-width , initial-scale=1, user-scalable=no">
   <!-- 
    增加这句后，可以看到浏览器的DevTools面板的模拟移动设备状态的变化
   -->
@@ -60,7 +64,7 @@
     }
   </style>
   
-  <title>Welcome to myCTApp</title>
+  <title>UI设计之鼠标模型的分析和控制以及键盘响应</title>
  </head> 
  <body>
   <header>
@@ -91,6 +95,7 @@
   </footer> 
   <div id="aid">
       用户键盘响应区
+      <p id="keyboard"></p>
   </div>
  <!-- <script src="myJs.js" >  -->
 
@@ -170,6 +175,13 @@
        $("bookface").textContent += "这是有效拖动";
      }
   });
+
+//对键盘做出响应控制
+ $("body").addEventListener("keypress",function(ev){
+   let k = ev.key;
+   let c = ev.keyCode;
+   $("keyboard").textContent = "您的按键 ：" + k + " ，"+ "字符编码 ：" + c;
+ });
 
   function $(ele){
         if (typeof ele !== 'string'){
