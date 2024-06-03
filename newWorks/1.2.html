@@ -18,20 +18,20 @@
       text-align: center;
     }
     header{
-        border: 2px solid blue;
+        border: 2px solid rgb(0, 234, 255);
         height: 10%;
         /* 相对字体大小 */
         font-size: 1.6em;
     }
 
     nav{
-        border: 2px solid blue;
+        border: 2px solid rgb(0, 234, 255);
         height: 10%;
         font-size: 1.2em;
   }
 
     #main{
-        border: 2px solid blue;
+        border: 2px solid rgb(0, 234, 255);
         height: 70%;
         font-size: 1.4em;
         background-image: url(../lesson/CS.jpg);
@@ -39,7 +39,7 @@
     }
 
     footer{
-        border: 2px solid blue;
+        border: 2px solid rgb(0, 234, 255);
         height: 10%;
         font-size: 1.1em;
     }
@@ -52,7 +52,7 @@
  <body>
   <header>
     <p>
-      现代电影赏析
+      名著赏析
     </p>
 
   </header>
@@ -79,7 +79,7 @@
   var UI = {};
   UI.appWidth = window.innerWidth;
   UI.appHeight = window.innerHeight;
-  let baseFont = UI.appWidth / 20;
+  let baseFont = UI.appWidth / 50;
   //因为我们改变了body对象的字体大小，这个属性会遗传给body的子子孙孙，形成自己的响应式设计
   document.body.style.fontSize = baseFont + 'px';
   //通过把window的高度设置为body（屏幕）的高度，实现全屏。
